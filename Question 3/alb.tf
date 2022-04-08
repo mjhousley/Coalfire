@@ -3,7 +3,7 @@ resource "aws_lb" "external-elb" {
   name               = "External-LB"
   internal           = false
   load_balancer_type = "application"
-  security_groups    = [aws_security_group.webaccess-sg.id]
+  security_groups    = [aws_security_group.weballow-sg.id]
   subnets            = [aws_subnet.wp-private-subnets[0].id, aws_subnet.wp-private-subnets[1].id]
 }
 
@@ -37,8 +37,8 @@ resource "aws_lb_listener" "external-elb" {
 }
 
 # Create Web Access Security Group
-resource "aws_security_group" "webaccess-sg" {
-  name        = "webaccess-sg"
+resource "aws_security_group" "weballow-sg" {
+  name        = "weballow-sg"
   description = "Allow HTTP inbound traffic"
   vpc_id      = aws_vpc.cf-vpc.id
 
@@ -58,7 +58,7 @@ resource "aws_security_group" "webaccess-sg" {
   }
 
   tags = {
-    Name = "webaccess-sg"
-    Environment = var.app_environment
+    Name = "weballow-sg"
+    Environment = var.app_env
   }
 }

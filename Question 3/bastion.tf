@@ -10,7 +10,7 @@ data "aws_ami" "windows-2019" {
 
 #Security group for the Bastion
 resource "aws_security_group" "aws-bastion-win-sg" {
-  name        = "${var.app_name}-${var.app_environment}-bastion-win-sg"
+  name        = "${var.app_name}-${var.app_env}-bastion-win-sg"
   description = "Access to Windows Bastion Server"
 
   ingress {
@@ -30,8 +30,8 @@ resource "aws_security_group" "aws-bastion-win-sg" {
   vpc_id = aws_vpc.cf-vpc.id
 
   tags = {
-    Name        = "${var.app_name}-${var.app_environment}-bastion-win-sg"
-    Environment = var.app_environment
+    Name        = "${var.app_name}-${var.app_env}-bastion-win-sg"
+    Environment = var.app_env
   }
 }
 
@@ -52,6 +52,6 @@ resource "aws_instance" "aws-bastion-win" {
 
   tags = {
     Name        = "bastion-01"
-    Environment = var.app_environment
+    Environment = var.app_env
   }
 }

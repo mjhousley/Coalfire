@@ -10,11 +10,11 @@ variable "app_name" {
 variable "aws_key_name" {
   type        = string
   description = "AWS Key Name"
-  default     = "coalfire"
+  default     = "mykeypair"
 }
 
 # Define app environment
-variable "app_environment" {
+variable "app_env" {
   type        = string
   description = "Application environment"
   default     = "production"
@@ -96,7 +96,7 @@ variable "rds_postgres" {
   }
 }
 
-# These would be better kept in a secrets vault. 
+# Secret vaults are a better place to keep these. 
 variable "user_information" {
   type = map(any)
   default = {

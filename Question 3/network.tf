@@ -5,7 +5,7 @@ resource "aws_vpc" "Coalfire VPC" {
   enable_dns_support = true
   tags = {
     Name = "Coalfire VPC"
-    Environment = var.app_environment
+    Environment = var.app_env
   }
 }
 
@@ -19,7 +19,7 @@ resource "aws_subnet" "public-subnets" {
 
   tags = {
     Name = "Public Subnet ${count.index + 1}"
-    Environment = var.app_environment
+    Environment = var.app_env
   }
 }
 
@@ -29,7 +29,7 @@ resource "aws_internet_gateway" "igw" {
   vpc_id = aws_vpc.cf-vpc.id
   tags = {
     Name = "clientapp.com IGW"
-    Environment = var.app_environment
+    Environment = var.app_env
   }
 }
 
@@ -44,7 +44,7 @@ resource "aws_route_table" "public-rt" {
 
   tags = {
     Name = "Public Route Table"
-    Environment = var.app_environment
+    Environment = var.app_env
   }
 }
 
@@ -66,7 +66,7 @@ resource "aws_subnet" "wp-private-subnets" {
 
   tags = {
     Name = "WP Subnet ${count.index + 1}"
-    Environment = var.app_environment
+    Environment = var.app_env
   }
 }
 
@@ -81,7 +81,7 @@ resource "aws_route_table" "wpsubnet-rt" {
 
   tags = {
     Name = "wp-private-subnets Route Table"
-    Environment = var.app_environment
+    Environment = var.app_env
   }
 }
 
