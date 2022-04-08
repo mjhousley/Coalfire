@@ -1,0 +1,37 @@
+# Pretty much everything based around this project https://github.com/ansible-lockdown/Windows-2019-CIS
+- name: Coalfire Question 2
+    hosts: "{{ host_name }}"
+    tasks:
+    - name: "18.9.45.4.1.2 | PATCH | L1 | Ensure Configure Attack Surface Reduction rules Set the state for each ASR rule is configured"
+      win_regedit:
+          path: HKLM:\Software\Policies\Microsoft\Windows Defender\Windows Defender Exploit Guard\ASR\Rules
+          name: "{{ item }}"
+          data: 1
+          type: string
+      loop:
+      ## This should be the same identifier as descrbied in the scenario, but this can be changed to include more
+          - 26190899-1602-49e8-8b27-eb1d0a1ce869
+      #when:
+      #    - rule_18_9_45_4_1_2
+      tags:
+          - level1-domaincontroller
+          - level1-memberserver
+          - rule_18.9.45.4.1.2
+          - patch
+
+          
+    - name: "2.2.21 | PATCH | L1 | Ensure Deny access to this computer from the network to include Guests Local account and member of Administrators group MS only"
+      win_user_right:
+          name: SeDenyNetworkLogonRight
+          users:
+              - Guests
+              - Local Account
+              - Administrators
+          action: set
+      #when:
+      #    - rule_2_2_21
+      #    - ansible_windows_domain_member
+      tags:
+          - level1-memberserver
+          - rule_2.2.21
+          - patch
