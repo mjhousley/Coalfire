@@ -91,7 +91,7 @@ variable "rds_postgres" {
     engine_version      = "11.15"
     instance_class      = "db.t3.micro"
     multi_az            = false
-    name                = "RDS1"
+    name                = "RDS-01"
     skip_final_snapshot = true
   }
 }
@@ -108,6 +108,6 @@ variable "user_information" {
 
 variable "remote_access_ip" {
   type        = string
-  default     = "98.230.82.175/32"
+  default     = "IP ADDRESS HERE"
   description = "IP address for remote access to Bastion"
 }
