@@ -8,7 +8,7 @@ data "aws_ami" "windows-2019" {
   }
 }
 
-# Define the security group for the Bastion
+#Security group for the Bastion
 resource "aws_security_group" "aws-bastion-win-sg" {
   name        = "${var.app_name}-${var.app_environment}-bastion-win-sg"
   description = "Access to Windows Bastion Server"
@@ -35,16 +35,15 @@ resource "aws_security_group" "aws-bastion-win-sg" {
   }
 }
 
-# Create EC2 Instance for Windows Bastion Server
+# Create a Windows Bastion Server instance on EC2
 resource "aws_instance" "aws-bastion-win" {
-  #count                       = 1
   ami                         = data.aws_ami.windows-2019.id
-#  instance_type               = var.instance_type
   instance_type               = "t3.medium"
   key_name                    = var.aws_key_name
   subnet_id                   = aws_subnet.public-subnets[0].id
   vpc_security_group_ids      = [aws_security_group.aws-bastion-win-sg.id]
   associate_public_ip_address = true
+  user_data                   = file("windows-config.tpl")
   source_dest_check           = false
 
   root_block_device {
@@ -56,9 +55,3 @@ resource "aws_instance" "aws-bastion-win" {
     Environment = var.app_environment
   }
 }
-
-# # Associate Test Bastion Elastic IP
-# resource "aws_eip_association" "aws-bastion-win-eip-association" {
-#   instance_id   = aws_instance.aws-bastion-win[0].id
-#   allocation_id = aws_eip.aws-bastion-win-eip.id
-# }
